@@ -10,7 +10,8 @@ async function dataSubmit(formdata) {
   "use server"
   const otp=formdata.get('otp');
 const data=await Checkotp(otp);
-if(data['status'==="success"]) {
+console.log(data);
+if(data['status']==="success") {
   return redirect('/login');
 } else {
  //

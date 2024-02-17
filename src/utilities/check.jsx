@@ -7,12 +7,10 @@ export default async function Checkotp(otp) {
     const token = cookies().get("check")?.value;
     if (token) {
       const verify = await VerifyToken(token);
-      console.log(verify);
       if (verify["email"]) {
         const check = await prisma.check.findUnique({
           where: { email: verify["email"], otp: otp },
         });
-        console.log(check);
         if (check["id"]) {
           const create = await prisma.user.create({
             data: {

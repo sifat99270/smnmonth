@@ -3,10 +3,9 @@ import My from "@/components/my";
 import { headers } from "next/headers";
 import { PrismaClient } from "@prisma/client";
 async function person(id,email,mounthId) {
-    console.log(id);
     try {
         const prisma = new PrismaClient();
-        if (id & mounthId) {
+        if (id && mounthId) {
           const person = await prisma.person.findMany({
             where: {
               mounthId: parseInt(mounthId),
@@ -18,7 +17,6 @@ async function person(id,email,mounthId) {
           return { status: "success", data: [] }
         }
       } catch (e) {
-        console.log(e);
         return { status: "fail", data: e }
       }
     // const res = await fetch(`${process.env.HOST}/api/alls/my?mounthId=${mounthId}`, {
@@ -38,7 +36,8 @@ export default async function page({ searchParams }) {
     const id = header.get('id')
     const email =header.get('email')
     const mounthId = searchParams['id']
-    const data = await person(id,email,mounthId)
+    const data = await person(id,email,mounthId);
+    console.log(data);
     if (data['data'] instanceof Array && data['data'].length > 0) {
         return (
             <div className="w-full gap-2 flex flex-col justify-center items-center p-2 bg-white shadow-lg shadow-gray-400">

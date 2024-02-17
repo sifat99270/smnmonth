@@ -1,51 +1,32 @@
 
 
 import { success, error } from "@/utilities/tosthandler";
-import Fetchani from "@/utilities/fetchani";
 import { cookies } from "next/headers";
-import { PrismaClient } from "@prisma/client";
-import { SendEmail } from "@/utilities/mail";
-import { createToken } from "@/utilities/token";
 import Sign from "@/utilities/sign";
 import { redirect } from "next/navigation";
+async function dataSubmit(formdata) {
+  'use server';
+  const firstName=formdata.get('firstName');
+  const lastName=formdata.get('lastName') ;
+  const email=formdata.get('email');
+  const password=formdata.get('password');
+  const cookie=cookies();
+ const data=await Sign(firstName, lastName, email, password)
+
+if(data['status']==="success"){
+  cookie.set('check', data['cookie'],{expires:Date.now()+(60*60*72),secure:true,path:"/"});
+ return redirect('/checkotp');
+}else{
+  return{
+    status:'fail',
+    data:"there was an error"
+  }
+}
+ 
+}
 
 const Registration = () => {
-  async function dataSubmit(formdata) {
-    'use server';
-    const firstName=formdata.get('firstName');
-    const lastName=formdata.get('lastName') ;
-    const email=formdata.get('email');
-    const password=formdata.get('password');
-    const cookie=cookies();
-    const prisma=new PrismaClient();
-   const data=await Sign(firstName, lastName, email, password)
-  if(data['status']==="success"){
-    cookie.set('check', data['cookie'],{expires:Date.now()+(60*60*72),secure:true,path:"/"});
-   return redirect('/checkotp');
-  }else{
-    return{
-      status:'fail',
-      data:"there was an error"
-    }
-  }
-   
-    
-
-    // const result = await fetch(`${process.env.HOST}/api/user/check`, {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     firstName: firstName,
-    //     lastName: lastName,
-    //     email: email,
-    //     password: password,
-    //   }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-  //   const json = await result.json();
-  // return json;
-  }
+ 
   return (
     <div className="w-80 shadow-md  bg-zinc-300 rounded-lg flex flex-col ml-auto justify-center items-center  mr-auto mt-10">
       <p className="font-bold  p-4">Registration</p>

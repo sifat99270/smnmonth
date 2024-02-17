@@ -27,10 +27,8 @@ export default async function Sign( firstName, lastName, email, password ) {
             otp: code.toString(),
           },
         });
-        console.log(create);
         if (create["id"]) {
-          const token = await createToken(create["id"], email);
-          
+          const token = await createToken(create["id"], email);         
           return {
             status: "success",
             data: "please check otp",
