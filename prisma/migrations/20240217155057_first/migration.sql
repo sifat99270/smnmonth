@@ -1,0 +1,82 @@
+-- CreateTable
+CREATE TABLE `check` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `firstName` VARCHAR(20) NOT NULL,
+    `lastName` VARCHAR(20) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(50) NOT NULL,
+    `otp` VARCHAR(10) NOT NULL,
+    `create` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    `update` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+
+    UNIQUE INDEX `check_email_key`(`email`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `user` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `firstName` VARCHAR(20) NOT NULL,
+    `lastName` VARCHAR(20) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(50) NOT NULL,
+    `otp` VARCHAR(10) NOT NULL,
+    `create` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    `update` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+
+    UNIQUE INDEX `user_email_key`(`email`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ip` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `create` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    `update` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `mounth` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `create` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    `update` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `person` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
+    `hazira` VARCHAR(5) NOT NULL,
+    `rate` VARCHAR(4) NOT NULL,
+    `mot` VARCHAR(10) NOT NULL,
+    `khoraki` VARCHAR(10) NOT NULL,
+    `barti` VARCHAR(10) NOT NULL,
+    `gotoMAs` VARCHAR(10) NOT NULL DEFAULT '',
+    `motAll` VARCHAR(20) NOT NULL,
+    `mounthId` INTEGER NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `create` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    `update` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `ip` ADD CONSTRAINT `ip_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `mounth` ADD CONSTRAINT `mounth_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `person` ADD CONSTRAINT `person_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `person` ADD CONSTRAINT `person_mounthId_fkey` FOREIGN KEY (`mounthId`) REFERENCES `mounth`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
