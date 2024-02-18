@@ -26,7 +26,10 @@ export default function RootLayout({ children }) {
       <NextTopLoader color="#E60000" height={2} speed={200}   showSpinner={false} />
         <Toaster />
         <Navbar logout={logout} auths={cookie} />
-        {children}</body>
+        <div className=" mt-16">
+        {children}
+        </div>
+        </body>
     </html>
   );
 }

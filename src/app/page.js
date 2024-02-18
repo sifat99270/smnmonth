@@ -59,7 +59,7 @@ export default async function Home() {
   const email=header.get('email')
   const datas=await getData(id,email);
   return (
-    <main className="">
+    <main >
       <Add mounthName={datas['data']} dataSubmit={dataSubmit}/>
     </main>
   );

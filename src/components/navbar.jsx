@@ -14,7 +14,7 @@ const Navbar = ({logout,auths}) => {
     }
   },[auths])
   return (
-    <div className="bg-slate-50 shadow-md px-3 flex rounded-md h-12 justify-center items-center">
+    <div className="bg-slate-50 shadow-md px-3 flex rounded-md h-12 justify-center items-center fixed w-full top-0">
       <p className="w-1/5 font-black mt-2">amar hisab</p>
 
       <div className="flex bg-slate-95v w-4/5 h-full justify-center items-center">
